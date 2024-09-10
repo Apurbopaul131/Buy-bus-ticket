@@ -46,3 +46,19 @@ const callculateDiscount = (totalPrice, parcent) => {
   const discoutPrice = totalPrice * (parcent / 100);
   return discoutPrice;
 };
+
+//track the id of the element which are clicked one time
+//using Singleton Pattern we are control the the arr which are initialize with empry arr.
+const Tracker = (function () {
+  let trackedElements = []; // Private array
+
+  return {
+    addElement: function (element) {
+      trackedElements.push(element);
+    },
+    getElements: function () {
+      //To prevent external modification of the array
+      return trackedElements.slice(); // Return a copy of the array
+    },
+  };
+})();

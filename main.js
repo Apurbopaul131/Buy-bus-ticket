@@ -17,19 +17,21 @@ const addTicketInfoToTicketForm = (ticketName) => {
   tr.appendChild(td1);
   tr.appendChild(td2);
   tr.appendChild(td3);
-  console.log(tr);
-  console.log(tableBody);
 
   //step 4: append the table row <tr> elemtn to table body
   tableBody.insertBefore(tr, tableBody.children[0]);
-  console.log(tableBody);
 };
 
 const handleCupponRelatedwork = (totalPrice, numParcent) => {
+  //callculate discount
   const discountVal = callculateDiscount(parseInt(totalPrice), numParcent);
   setInnerText("discount-price", discountVal);
+
+  //callculate grand total
   const grandTotal = grandTotalCallculator(totalPrice, discountVal);
   setInnerText("grand-total", grandTotal);
+
+  //show the discount row and hide cuppone box
   classRemoveById("discount-row", "hidden");
   classAddById("cuppon-row", "hidden");
 };
@@ -37,52 +39,106 @@ const handleCupponRelatedwork = (totalPrice, numParcent) => {
 document
   .getElementById("manage-ticket")
   .addEventListener("click", function (e) {
-    //total selacted exact
-    const totalSelactedSeat = document.getElementById("selacted-seat");
-    //check selacted four or more seat
+    const alSelactArr = Tracker.getElements();
+    const seatsIdArr = [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "B1",
+      "B2",
+      "B3",
+      "B4",
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "F1",
+      "F2",
+      "F3",
+      "F4",
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "H1",
+      "H2",
+      "H3",
+      "H4",
+      "I1",
+      "I2",
+      "I3",
+      "I4",
+      "J1",
+      "J2",
+      "J3",
+      "J4",
+    ];
+    //check you are clicked on a button or not
     if (
-      parseInt(totalSelactedSeat.innerText) >= 0 &&
-      parseInt(totalSelactedSeat.innerText) <= 3
+      seatsIdArr.includes(e.target.id) &&
+      !alSelactArr.includes(e.target.id)
     ) {
-      console.log(e.target.id);
-      const buttonElmentId = e.target.id;
-      //remove btn backgroud color
-      replaceClassNameById(buttonElmentId, "bg-[#F7F8F8]", "bg-[#1DD100]");
+      //total selacted exact
+      const totalSelactedSeat = document.getElementById("selacted-seat");
+      //check selacted four or more seat
+      if (
+        parseInt(totalSelactedSeat.innerText) >= 0 &&
+        parseInt(totalSelactedSeat.innerText) <= 3
+      ) {
+        const buttonElmentId = e.target.id;
+        //remove btn backgroud color
+        replaceClassNameById(buttonElmentId, "bg-[#F7F8F8]", "bg-[#1DD100]");
 
-      //add new color for selacted seat
-      classAddById(buttonElmentId, "text-white");
+        //add new color for selacted seat
+        classAddById(buttonElmentId, "text-white");
 
-      //decrease the number of seat by one
-      const updateSeatVal = decreaseValueByone("seat-left");
-      setInnerText("seat-left", updateSeatVal);
+        //decrease the number of seat by one
+        const updateSeatVal = decreaseValueByone("seat-left");
+        setInnerText("seat-left", updateSeatVal);
 
-      //incrase selacted seat number
-      const selactedSeatVal = increaseValueByone("selacted-seat");
-      setInnerText("selacted-seat", selactedSeatVal);
+        //incrase selacted seat number
+        const selactedSeatVal = increaseValueByone("selacted-seat");
+        setInnerText("selacted-seat", selactedSeatVal);
 
-      //add ticket info to ticket form
-      addTicketInfoToTicketForm(buttonElmentId);
+        //add ticket info to ticket form
+        addTicketInfoToTicketForm(buttonElmentId);
 
-      //set intical total
-      const initialTotalprice = callculateInitialTotal(selactedSeatVal, 550);
-      console.log(initialTotalprice);
-      setInnerText("total-price", initialTotalprice);
+        //set intical total
+        const initialTotalprice = callculateInitialTotal(selactedSeatVal, 550);
+        console.log(initialTotalprice);
+        setInnerText("total-price", initialTotalprice);
 
-      //apply cuppon button when selacted seat 4
-      if (selactedSeatVal === 4) {
-        const appyBtn = document.getElementById("btn-apply");
-        appyBtn.disabled = false;
+        // Eanble apply cuppon button when selacted seat 4
+        if (selactedSeatVal === 4) {
+          const appyBtn = document.getElementById("btn-apply");
+          appyBtn.disabled = false;
+        }
+
+        // calculate grand total
+        const grandTotal = grandTotalCallculator(
+          parseInt(document.getElementById("total-price").innerText),
+          parseInt(document.getElementById("discount-price").innerText)
+        );
+        setInnerText("grand-total", grandTotal);
+        //push id of the array
+        Tracker.addElement(e.target.id);
+      }
+      //when you are try to selact more than four seat then show a alert
+      else {
+        alert("You can not selact more then four seat...");
       }
     } else {
-      alert("You can not selact more then four seat...");
+      console.log("you are clicked outside the key or alredy selacted button");
     }
-
-    // calculate grand total
-    const grandTotal = grandTotalCallculator(
-      parseInt(document.getElementById("total-price").innerText),
-      parseInt(document.getElementById("discount-price").innerText)
-    );
-    setInnerText("grand-total", grandTotal);
   });
 
 document.getElementById("btn-apply").addEventListener("click", function () {
