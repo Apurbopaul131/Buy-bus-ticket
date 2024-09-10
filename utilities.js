@@ -62,3 +62,13 @@ const Tracker = (function () {
     },
   };
 })();
+
+const showAlert = (alertTitle, alertDes) => {
+  setInnerText("alert-title", alertTitle);
+  setInnerText("alert-description", alertDes);
+  classRemoveById("alert-show", "hidden");
+};
+
+const closeAlert = () => {
+  classAddById("alert-show", "hidden");
+};

@@ -134,7 +134,8 @@ document
       }
       //when you are try to selact more than four seat then show a alert
       else {
-        alert("You can not selact more then four seat...");
+        // alert("You can not selact more then four seat...");
+        showAlert("Max seat limit!", "You can not selact more than six seat..");
       }
     } else {
       console.log("you are clicked outside the key or alredy selacted button");
@@ -155,6 +156,7 @@ document.getElementById("btn-apply").addEventListener("click", function () {
     }
   } else {
     cupponInput.value = "";
-    alert("Yur cuppon is invalid..");
+    // alert("Yur cuppon is invalid..");
+    showAlert("Cuppon invalid!", "please give me correct cuppon..");
   }
 });

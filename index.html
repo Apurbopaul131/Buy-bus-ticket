@@ -221,6 +221,25 @@
           </div>
         </div>
       </div>
+
+      <div id="alert-show" role="alert" class="alert shadow-lg w-2/4 mx-auto hidden alert-warning mb-5">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="stroke-info h-6 w-6 shrink-0">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <div>
+          <h3 id="alert-title" class="font-bold">Max Limt Error!</h3>
+          <div id="alert-description" class="text-xs">You can not selact more than four seats..</div>
+        </div>
+        <button onclick="closeAlert()" class="btn btn-sm">See</button>
+      </div>
         
       <!-- take ticket setion -->
        <div id="total-ticket-section" class="grid grid-col-1 lg:grid-cols-[60%_40%] bg-[#FFFFFF] p-5 rounded-3xl shadow-sm">
